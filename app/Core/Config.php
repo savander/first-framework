@@ -77,17 +77,23 @@ class Config
      * @author Anton Medvedev <anton (at) elfet (dot) ru>
      *
      * @param $path
-     * @return bool
+     * @param bool|false $default
+     * @return array|bool
      */
     public function get($path, $default = false)
     {
         $array = $this->m_ConfigItems;
-        if (!empty($path)) {
+        if (!empty($path))
+        {
             $keys = $this->explode($path);
-            foreach ($keys as $key) {
-                if (isset($array[$key])) {
+            foreach ($keys as $key)
+            {
+                if (isset($array[$key]))
+                {
                     $array = $array[$key];
-                } else {
+                }
+                else
+                {
                     return $default;
                 }
             }
@@ -104,29 +110,41 @@ class Config
     public function set($path, $value)
     {
         if (!empty($path)) {
-            $at = & $this->m_ConfigItems;
+            $at =& $this->m_ConfigItems;
             $keys = $this->explode($path);
-            while (count($keys) > 0) {
-                if (count($keys) === 1) {
-                    if (is_array($at)) {
+            while (count($keys) > 0)
+            {
+                if (count($keys) === 1)
+                {
+                    if (is_array($at))
+                    {
                         $at[array_shift($keys)] = $value;
-                    } else {
+                    }
+                    else
+                    {
                         throw new \RuntimeException("Can not set value at this path ($path) because is not array.");
                     }
-                } else {
+                }
+                else
+                {
                     $key = array_shift($keys);
-                    if (!isset($at[$key])) {
+                    if (!isset($at[$key]))
+                    {
                         $at[$key] = array();
                     }
-                    $at = & $at[$key];
+                    $at =& $at[$key];
                 }
             }
-        } else {
+        }
+        else
+        {
             $this->m_ConfigItems = $value;
         }
     }
 
     /**
+     * @author Anton Medvedev <anton (at) elfet (dot) ru>
+     *
      * @param $path
      * @return array
      */
