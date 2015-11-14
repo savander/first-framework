@@ -53,24 +53,70 @@ class Config
     }
 
     /**
-     * Return $item if exists in array.
-     * Item is exploded by dot ".".
-     * To get item enter '<config>.<item>'
+     * Returns item if exists in array.
+     * Using dot notation
      *
-     * Example:
+     * Usage:
      * $config->get('app.appname');
-     * @param $item
+     *
+     * @author Anton Medvedev <anton (at) elfet (dot) ru>
+     *
+     * @param $path
      * @return bool
      */
-    public function get($item)
+    public function get($path, $default = false)
     {
-        $item = explode('.', $item);
-        if (array_key_exists($item[0], $this->m_ConfigItems))
-        {
-            if (array_key_exists($item[1], $this->m_ConfigItems[$item[0]])) {
-                return $this->m_ConfigItems[$item[0]][$item[1]];
+        $array = $this->m_ConfigItems;
+        if (!empty($path)) {
+            $keys = $this->explode($path);
+            foreach ($keys as $key) {
+                if (isset($array[$key])) {
+                    $array = $array[$key];
+                } else {
+                    return $default;
+                }
             }
         }
-        return false;
+        return $array;
+    }
+
+    /**
+     * @author Anton Medvedev <anton (at) elfet (dot) ru>
+     *
+     * @param string $path
+     * @param mixed $value
+     */
+    public function set($path, $value)
+    {
+        if (!empty($path)) {
+            $at = & $this->m_ConfigItems;
+            $keys = $this->explode($path);
+            while (count($keys) > 0) {
+                if (count($keys) === 1) {
+                    if (is_array($at)) {
+                        $at[array_shift($keys)] = $value;
+                    } else {
+                        throw new \RuntimeException("Can not set value at this path ($path) because is not array.");
+                    }
+                } else {
+                    $key = array_shift($keys);
+                    if (!isset($at[$key])) {
+                        $at[$key] = array();
+                    }
+                    $at = & $at[$key];
+                }
+            }
+        } else {
+            $this->m_ConfigItems = $value;
+        }
+    }
+
+    /**
+     * @param $path
+     * @return array
+     */
+    protected function explode($path)
+    {
+        return preg_split('/[:\.]/', $path);
     }
 }
