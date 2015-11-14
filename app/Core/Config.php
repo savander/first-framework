@@ -31,6 +31,7 @@ class Config
      * Load settings from file
      * @param $file
      * @param string $type
+     * @return bool
      */
     public function load($file, $type = 'php')
     {
@@ -40,14 +41,28 @@ class Config
             {
                 case 'php':
                     $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.php';
+                    if(file_exists($configLocation))
+                    {
+                        $this->m_ConfigItems[$file] = include_once $configLocation;
+                    }
+                    break;
+
+                case 'json':
+                    $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.json';
+                    if(file_exists($configLocation))
+                    {
+                        $this->m_ConfigItems[$file] = json_decode(file_get_contents($configLocation), true);
+                    }
+                    break;
+                case 'ini':
+                    $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.ini';
+                    if(file_exists($configLocation))
+                    {
+                        $this->m_ConfigItems[$file] = parse_ini_file($configLocation, true);
+                    }
                     break;
                 default:
-                    $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.php';
-            }
-
-            if(file_exists($configLocation))
-            {
-                $this->m_ConfigItems[$file] = include_once $configLocation;
+                    return false;
             }
         }
     }
