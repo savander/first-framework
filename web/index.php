@@ -45,15 +45,3 @@ if(defined('ENVIRONMENT'))
  * use $config variable to manage settings
  */
 include_once __DIR__ . '/../config/config.php';
-
-//var_dump(
-//    $config->m_Paths
-//);
-//var_dump(
-//    $config->m_ConfigItems
-//);
-
-echo "<pre>";
-var_dump($config);
-var_dump($config->get('app.egerg'));
-echo $config->get('appe.egerg');
