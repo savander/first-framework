@@ -38,3 +38,10 @@ if(defined('ENVIRONMENT'))
             exit('The application environment is not set correctly.');
     }
 }
+
+
+/**
+ * Load settings
+ * use $config variable to manage settings
+ */
+include_once __DIR__ . '/../config/config.php';

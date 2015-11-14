@@ -20,7 +20,7 @@ final class Autoload
     }
 
     /**
-     * Add directories, where we searching for classes.
+     * Add directories to search for classes
      * @param array $_directories
      */
     public function addDirectories($_directories = ['/'])
