@@ -6,7 +6,7 @@ class Config
      * Stored paths, where we will search for configs.
      * @var array
      */
-    protected $m_Paths = [];
+    public $m_Paths = [];
 
     /**
      * Stored config items in array
@@ -47,21 +47,29 @@ class Config
 
             if(file_exists($configLocation))
             {
-                $this->m_ConfigItems = include_once $configLocation;
+                $this->m_ConfigItems[$file] = include_once $configLocation;
             }
         }
     }
 
     /**
      * Return $item if exists in array.
+     * Item is exploded by dot ".".
+     * To get item enter '<config>.<item>'
+     *
+     * Example:
+     * $config->get('app.appname');
      * @param $item
      * @return bool
      */
     public function get($item)
     {
-        if(in_array($item, $this->m_ConfigItems))
+        $item = explode('.', $item);
+        if (array_key_exists($item[0], $this->m_ConfigItems))
         {
-            return $this->m_ConfigItems[$item];
+            if (array_key_exists($item[1], $this->m_ConfigItems[$item[0]])) {
+                return $this->m_ConfigItems[$item[0]][$item[1]];
+            }
         }
         return false;
     }

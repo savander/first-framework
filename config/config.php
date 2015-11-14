@@ -2,6 +2,6 @@
 
 $config = new Config;
 $config->addPaths([
-    WEB_DIR.'/../'
+    realpath(WEB_DIR.'/../config')
 ]);
-$config->load('Settings');
+$config->load('app');
