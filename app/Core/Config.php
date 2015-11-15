@@ -14,6 +14,13 @@ class Config
      */
     public $m_ConfigItems = [];
 
+
+    /**
+     * Reference to DotNotation class
+     * @var dotnotation class
+     */
+    protected $m_DotNotationInstance;
+
     /**
      * Add paths to search for configs
      * @param array $_paths
@@ -28,7 +35,13 @@ class Config
 
 
     /**
-     * Load settings from file
+     * Load settings from specific file
+     *
+     * Supported types:
+     * - PHP (return array())
+     * - JSON
+     * - INI
+     *
      * @param $file
      * @param string $type
      * @return bool
@@ -74,82 +87,38 @@ class Config
      * Usage:
      * $config->get('app.appname');
      *
-     * @author Anton Medvedev <anton (at) elfet (dot) ru>
      *
      * @param $path
-     * @param bool|false $default
      * @return array|bool
      */
-    public function get($path, $default = false)
+    public function get($path)
     {
-        $array = $this->m_ConfigItems;
-        if (!empty($path))
-        {
-            $keys = $this->explode($path);
-            foreach ($keys as $key)
-            {
-                if (isset($array[$key]))
-                {
-                    $array = $array[$key];
-                }
-                else
-                {
-                    return $default;
-                }
-            }
-        }
-        return $array;
+        return $this->m_DotNotationInstance->get($path, false);
     }
 
     /**
-     * @author Anton Medvedev <anton (at) elfet (dot) ru>
+     * Set value in config in specific array
+     * Using dot notation
+     *
+     *
+     * Usage:
+     * $config->set('app.appname', 'newValue');
+     *
      *
      * @param string $path
      * @param mixed $value
      */
     public function set($path, $value)
     {
-        if (!empty($path)) {
-            $at =& $this->m_ConfigItems;
-            $keys = $this->explode($path);
-            while (count($keys) > 0)
-            {
-                if (count($keys) === 1)
-                {
-                    if (is_array($at))
-                    {
-                        $at[array_shift($keys)] = $value;
-                    }
-                    else
-                    {
-                        throw new \RuntimeException("Can not set value at this path ($path) because is not array.");
-                    }
-                }
-                else
-                {
-                    $key = array_shift($keys);
-                    if (!isset($at[$key]))
-                    {
-                        $at[$key] = array();
-                    }
-                    $at =& $at[$key];
-                }
-            }
-        }
-        else
-        {
-            $this->m_ConfigItems = $value;
-        }
+        $this->m_DotNotationInstance->set($path, $value);
     }
 
     /**
-     * @author Anton Medvedev <anton (at) elfet (dot) ru>
-     *
-     * @param $path
-     * @return array
+     * Make reference for DotNotation class.
      */
-    protected function explode($path)
+    public function __construct()
     {
-        return preg_split('/[:\.]/', $path);
+        $this->m_DotNotationInstance = new DotNotation($this->m_ConfigItems);
     }
+
 }
