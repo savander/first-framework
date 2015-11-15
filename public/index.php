@@ -10,9 +10,9 @@ define('FRAMEWORK_START', microtime(true));
 define('WEB_DIR', __DIR__);
 
 /**
- * Autoload classes
+ * Load bootstrap file
  */
-include_once __DIR__ . '/../autoload/autoload.php';
+include_once __DIR__ . '/../bootstrap/bootstrap.php';
 
 /**
  * Setting the environment influences
@@ -38,10 +38,3 @@ if(defined('ENVIRONMENT'))
             exit('The application environment is not set correctly.');
     }
 }
-
-
-/**
- * Load settings
- * use $config variable to manage settings
- */
-include_once __DIR__ . '/../config/config.php';
