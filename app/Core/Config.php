@@ -62,20 +62,20 @@ class Config
 
                 case 'json':
                     $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.json';
-                    if(file_exists($configLocation))
+                    if(!is_file($configLocation))
                     {
                         $this->m_ConfigItems[$file] = json_decode(file_get_contents($configLocation), true);
                     }
                     break;
                 case 'ini':
                     $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.ini';
-                    if(file_exists($configLocation))
+                    if(!is_file($configLocation))
                     {
                         $this->m_ConfigItems[$file] = parse_ini_file($configLocation, true);
                     }
                     break;
                 default:
-                    return false;
+                    throw new InvalidArgumentException(sprintf('The file %s not exists!', $item));
             }
         }
     }

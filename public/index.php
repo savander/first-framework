@@ -38,3 +38,7 @@ if(defined('ENVIRONMENT'))
             exit('The application environment is not set correctly.');
     }
 }
+
+
+echo "<pre>";
+var_dump($config->m_ConfigItems);
