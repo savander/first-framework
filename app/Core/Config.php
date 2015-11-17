@@ -54,7 +54,7 @@ class Config
             {
                 case 'php':
                     $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.php';
-                    if(file_exists($configLocation))
+                    if(is_file($configLocation))
                     {
                         $this->m_ConfigItems[$file] = include_once $configLocation;
                     }
@@ -62,14 +62,14 @@ class Config
 
                 case 'json':
                     $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.json';
-                    if(!is_file($configLocation))
+                    if(is_file($configLocation))
                     {
                         $this->m_ConfigItems[$file] = json_decode(file_get_contents($configLocation), true);
                     }
                     break;
                 case 'ini':
                     $configLocation = $item.DIRECTORY_SEPARATOR.$file.'.ini';
-                    if(!is_file($configLocation))
+                    if(is_file($configLocation))
                     {
                         $this->m_ConfigItems[$file] = parse_ini_file($configLocation, true);
                     }
