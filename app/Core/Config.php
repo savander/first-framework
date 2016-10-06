@@ -114,6 +114,15 @@ class Config
     }
 
     /**
+     * Check if key exists
+     */
+
+    public function have($path)
+    {
+        return $this->m_DotNotationInstance->have($path);
+    }
+
+    /**
      * Make reference for DotNotation class.
      */
     public function __construct()
@@ -121,4 +130,11 @@ class Config
         $this->m_DotNotationInstance = new DotNotation($this->m_ConfigItems);
     }
 
+    /**
+     * Update the DotNotationInstace Array
+     */
+    public function update()
+    {
+        $this->m_DotNotationInstance = new DotNotation($this->m_ConfigItems);
+    }
 }

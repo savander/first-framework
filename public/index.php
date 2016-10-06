@@ -5,9 +5,14 @@
 define('FRAMEWORK_START', microtime(true));
 
 /**
- * Constant WEB_DIR contains path used to localize main directory.
+ * Constant WEB_DIR contains path used to localize public directory.
  */
 define('WEB_DIR', __DIR__);
+
+/**
+ * Constant ROOT_DIR contains path used to localize root directory.
+ */
+define('ROOT_DIR', __DIR__.'/../');
 
 /**
  * Load bootstrap file
@@ -42,3 +47,6 @@ if(defined('ENVIRONMENT'))
 
 echo "<pre>";
 var_dump($config->m_ConfigItems);
+echo "</pre>";
+
+echo $config->get('app.appname');
