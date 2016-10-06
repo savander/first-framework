@@ -45,8 +45,12 @@ if(defined('ENVIRONMENT'))
 }
 
 
-echo "<pre>";
-$router = new Router();
-var_dump($router->explodeUrl($_SERVER['REQUEST_URI']));
-echo "</pre>";
+// Example route
+$route->get('/', 'controller@index');
+
+
+/**
+ * Enable routing.
+ */
+$route->execute();
 
