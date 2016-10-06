@@ -114,9 +114,11 @@ class Config
     }
 
     /**
-     * Check if key exists
+     * Check if key in array exists
+     *
+     * @param $path
+     * @return bool
      */
-
     public function have($path)
     {
         return $this->m_DotNotationInstance->have($path);
