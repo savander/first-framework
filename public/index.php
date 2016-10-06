@@ -46,7 +46,7 @@ if(defined('ENVIRONMENT'))
 
 
 echo "<pre>";
-var_dump($config->m_ConfigItems);
+$router = new Router();
+var_dump($router->explodeUrl($_SERVER['REQUEST_URI']));
 echo "</pre>";
 
-echo $config->get('app.appname');
