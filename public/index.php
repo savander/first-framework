@@ -12,7 +12,7 @@ define('WEB_DIR', __DIR__);
 /**
  * Constant ROOT_DIR contains path used to localize root directory.
  */
-define('ROOT_DIR', __DIR__.'/../');
+define('ROOT_DIR', __DIR__ . '/../');
 
 /**
  * Load bootstrap file
@@ -34,20 +34,19 @@ if(defined('ENVIRONMENT'))
     switch (ENVIRONMENT)
     {
         case 'development':
+            ini_set('display_errors', 1);
             error_reporting(E_ALL);
             break;
         case 'production':
+            ini_set('display_errors', 0);
             error_reporting(0);
             break;
         default:
             exit('The application environment is not set correctly.');
     }
 }
-
-
-// Example route
+// Example routes
 $route->get('/', 'controller@index');
-
 
 /**
  * Enable routing.
