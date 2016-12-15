@@ -3,6 +3,7 @@
 //SECTION CONTENT START
 ob_start();
 ?>
+TESTET
 <?php
 //SECTION CONTENT END
 $content = ob_get_contents();

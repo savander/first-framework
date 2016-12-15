@@ -1,10 +1,12 @@
 <?php
 
 return [
-    'database-1' => [
+    'db' => [
+        'type' => 'mysql',
         'username' => 'root',
         'password' => '',
-        'database' => 'mvc',
-        'hostname' => 'localhost'
+        'name' => 'mvc',
+        'hostname' => 'localhost',
+        'encode' => 'UTF-8'
     ]
 ];

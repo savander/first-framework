@@ -4,6 +4,8 @@ class Controller
 {
     public function index()
     {
+        $test = new RankingModel();
+        echo $test->getPlayer();
         return View::make('pages/homepage')->with(['title' => 'test'])->render();
     }
 
