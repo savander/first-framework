@@ -44,7 +44,7 @@ class Router
      */
     public function execute()
     {
-        $URI = $this->getRequestPath();
+        $URI = strtolower($this->getRequestPath());
         $Method = Request::getMethodType();
         if($this->routeExists($URI)){
             if(array_key_exists($Method, $this->m_Routes[$URI])){
@@ -67,11 +67,11 @@ class Router
         $requestUri = explode('/', preg_replace('/\\?.*/', '', Request::getRequestURI()));
         $scriptName = explode('/', Request::getScriptURI());
         for($i = 0; $i < sizeof($scriptName); $i++){
-            if($requestUri[$i] == $scriptName[$i]){
+            if($requestUri[$i] == $scriptName[$i] || $requestUri[$i] === ''){
                 unset($requestUri[$i]);
             }
         }
-        return '/'.implode($requestUri, '/');
+        return '/'.implode(array_map('strtolower', array_filter($requestUri)), '/');
     }
 
 

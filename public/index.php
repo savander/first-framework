@@ -45,8 +45,14 @@ if(defined('ENVIRONMENT'))
             exit('The application environment is not set correctly.');
     }
 }
-// Example routes
-$route->get('/', 'controller@index');
+
+
+/**
+ * Include routes
+ */
+
+
+include_once ROOT_DIR . '/app/routes.php';
 
 /**
  * Enable routing.
